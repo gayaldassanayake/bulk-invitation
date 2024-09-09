@@ -56,8 +56,8 @@ def add_name_to_pdf(input_pdf, output_pdf, name, y_position, color):
         writer.write(outputStream)
 
 # Read CSV file and generate PDFs with personalized names
-def generate_invites(event, guest_list, y_position, color):
-    with open(guest_list, mode='r') as file:
+def generate_invites(event, y_position, color):
+    with open(event + "_invitees.csv", mode='r') as file:
         reader = csv.reader(file)
 
         for value in reader:
@@ -65,12 +65,12 @@ def generate_invites(event, guest_list, y_position, color):
             output_dir = os.path.join("exports", event)
             os.makedirs(output_dir, exist_ok=True)
 
-            output_pdf = os.path.join(output_dir, f"{name}.pdf")
+            output_pdf = os.path.join(output_dir, f"{event}-{name}.pdf")
 
             # Add the name to the PDF
             add_name_to_pdf(event + ".pdf", output_pdf, name, y_position, color)
 
 wedding_color = (0.6784313725490196, 0.5137254901960784, 0.18823529411764706)
 homecoming_color = (0.5568627450980392, 0.6, 0.6352941176470588)
-generate_invites("wedding", "wedding_invitees.csv", 240, wedding_color)
-generate_invites("homecoming", "homecoming_invitees.csv", 240, homecoming_color)
+generate_invites("wedding", 240, wedding_color)
+generate_invites("homecoming", 240, homecoming_color)
